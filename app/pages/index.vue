@@ -98,7 +98,7 @@ useSchemaOrg([
           <TicketsChallenge />
         </div>
         <p class="mt-4 text-xs text-neutral-500 dark:text-neutral-400">
-          *適逢過年春節連假，2/13~2/22 全台票房與觀影人次準確數據將於 2/23 (一) 公布後更新
+          *票房與觀影人次皆已超越《海角七號》，雙料奪冠！
         </p>
       </section>
 

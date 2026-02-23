@@ -132,11 +132,11 @@ export const movieInfo = {
   rating: "輔12級",
   runtime: "02:14:00",
   distributor: "壹壹喜喜電影股份有限公司",
-  lastUpdated: "2026-02-09 12:00:00",
+  lastUpdated: "2026-02-23 12:00:00",
   dataQuality: {
-    lastUpdated: "2026-02-09 12:00:00",
+    lastUpdated: "2026-02-23 12:00:00",
     dataSource: "國家影視聽中心票房資訊系統",
-    totalWeeks: 10,
+    totalWeeks: 12,
     missingData: [],
     anomalies: [
       {
@@ -159,16 +159,7 @@ export const movieInfo = {
 };
 
 // 即時單日資訊（臨時追蹤用，會被完整週資料取代）
-export const latestDaily: DailySnapshot | null = {
-  date: "2026/02/14",
-  dayOfWeek: "五",
-  dailyRevenue: 0, // 待確認
-  cumulativeRevenue: 536_000_000,
-  cumulativeTickets: 1_945_000, // 估算值（以平均票價 275 元計算）
-  updatedAt: "2026-02-14 12:00:00",
-  isEstimate: true,
-  note: "已超越海角七號票房紀錄，確切數字待官方公布",
-};
+export const latestDaily: DailySnapshot | null = null;
 
 // 完整週資料（確認後的正式資料）
 export const weeklyData: WeeklyBoxOffice[] = [
@@ -272,10 +263,30 @@ export const weeklyData: WeeklyBoxOffice[] = [
     changeRate: -34.5,
     theaters: 88,
   },
+  {
+    week: 11,
+    dateRange: "2026/02/09~2026/02/15",
+    revenue: 70_060_318,
+    tickets: 254_220,
+    cumulativeRevenue: 558_896_826,
+    cumulativeTickets: 2_028_175,
+    changeRate: -26.36,
+    theaters: 88,
+  },
+  {
+    week: 12,
+    dateRange: "2026/02/16~2026/02/22",
+    revenue: 83_499_794,
+    tickets: 302_618,
+    cumulativeRevenue: 642_396_620,
+    cumulativeTickets: 2_330_793,
+    changeRate: 19.18,
+    theaters: 82,
+  },
 ];
 
 export const taiwanMovieRankings: MovieRanking[] = [
-  { rank: 1, title: "陽光女子合唱團", revenue: 536_000_000, year: 2025, rating: "輔12級", isActive: true },
+  { rank: 1, title: "陽光女子合唱團", revenue: 642_396_620, tickets: 2_330_793, year: 2025, rating: "輔12級", isActive: true },
   { rank: 2, title: "海角七號", revenue: 534_351_817, tickets: 2_330_000, year: 2008, rating: "普遍級", isActive: false },
   {
     rank: 3,
