@@ -42,6 +42,8 @@ const milestones = [
   { tickets: 10, label: "10萬人" },
   { tickets: 50, label: "50萬人" },
   { tickets: 100, label: "100萬人" },
+  { tickets: 150, label: "150萬人" },
+  { tickets: 200, label: "200萬人" },
 ];
 </script>
 
