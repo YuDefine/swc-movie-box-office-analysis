@@ -132,9 +132,9 @@ export const movieInfo = {
   rating: "輔12級",
   runtime: "02:14:00",
   distributor: "壹壹喜喜電影股份有限公司",
-  lastUpdated: "2026-02-23 17:40:00",
+  lastUpdated: "2026-02-24 00:00:00",
   dataQuality: {
-    lastUpdated: "2026-02-23 17:40:00",
+    lastUpdated: "2026-02-24 00:00:00",
     dataSource: "國家影視聽中心票房資訊系統",
     totalWeeks: 12,
     missingData: [],
@@ -159,7 +159,15 @@ export const movieInfo = {
 };
 
 // 即時單日資訊（臨時追蹤用，會被完整週資料取代）
-export const latestDaily: DailySnapshot | null = null;
+export const latestDaily: DailySnapshot | null = {
+  date: "2026/02/23",
+  dayOfWeek: "一",
+  dailyRevenue: 4_645_000,
+  cumulativeRevenue: 655_111_000,
+  cumulativeTickets: 2_379_219,
+  updatedAt: "2026-02-24 00:00:00",
+  isEstimate: true,
+};
 
 // 完整週資料（確認後的正式資料）
 export const weeklyData: WeeklyBoxOffice[] = [
