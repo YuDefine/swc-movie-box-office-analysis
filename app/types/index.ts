@@ -17,6 +17,7 @@ export interface MovieRanking {
   year: number;
   rating?: string; // 電影分級（如：普遍級、輔12級）
   isActive: boolean;
+  includesRerelease?: boolean; // 含重映票房
 }
 
 export interface DerivedMetrics {

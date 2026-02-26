@@ -1,14 +1,29 @@
 <script setup lang="ts">
 import type { Row } from "@tanstack/vue-table";
-import { taiwanMovieRankings, getLatestCumulativeRevenue } from "~/data/box-office";
+import {
+  taiwanMovieRankings,
+  overallMovieRankings,
+  getLatestCumulativeRevenue,
+  movieInfo,
+} from "~/data/box-office";
 import type { TableColumn } from "@nuxt/ui";
 import type { MovieRanking } from "~/types";
 
 // 擴充型別：加入差距與差異百分比
 interface EnhancedMovieRanking extends MovieRanking {
+  isSWC: boolean; // 是否為陽光女子合唱團（基準片）
   gapFromSWC: number; // 與陽光女子合唱團的差距（正值=領先，負值=落後）
   percentOfSWC: number; // 相對陽光女子合唱團的差異百分比（正值=領先，負值=落後；下限 -100%）
 }
+
+type TabValue = "domestic" | "overall";
+
+const activeTab = ref<TabValue>("domestic");
+
+const tabs: { label: string; value: TabValue; icon: string }[] = [
+  { label: "國片排行", value: "domestic", icon: "i-lucide-flag" },
+  { label: "總體排行", value: "overall", icon: "i-lucide-globe" },
+];
 
 function formatCurrency(value: number): string {
   return new Intl.NumberFormat("zh-TW", {
@@ -42,19 +57,31 @@ function formatPercent(value: number): string {
 // 取得陽光女子合唱團的最新票房（使用即時資料）
 const swcRevenue = getLatestCumulativeRevenue();
 
-// 計算擴充資料
+// 計算擴充資料（根據 tab 切換數據來源，動態排序）
 const enhancedRankings = computed<EnhancedMovieRanking[]>(() => {
-  return taiwanMovieRankings.map((movie) => {
-    const movieRevenue = movie.isActive ? swcRevenue : movie.revenue;
+  const source = activeTab.value === "domestic" ? taiwanMovieRankings : overallMovieRankings;
+
+  const enhanced = source.map((movie) => {
+    const isSWC = movie.title === movieInfo.title;
+    const movieRevenue = isSWC ? swcRevenue : movie.revenue;
     const rawPercentDiff = swcRevenue > 0 ? ((movieRevenue - swcRevenue) / swcRevenue) * 100 : 0;
     const clampedPercentDiff = Math.max(rawPercentDiff, -100);
     return {
       ...movie,
+      isSWC,
       revenue: movieRevenue,
       gapFromSWC: movieRevenue - swcRevenue,
       percentOfSWC: clampedPercentDiff,
     };
   });
+
+  // 依票房降序排列並指派動態排名
+  enhanced.sort((a, b) => b.revenue - a.revenue);
+  enhanced.forEach((movie, index) => {
+    movie.rank = index + 1;
+  });
+
+  return enhanced;
 });
 
 const columns: TableColumn<EnhancedMovieRanking>[] = [
@@ -68,14 +95,27 @@ const columns: TableColumn<EnhancedMovieRanking>[] = [
 ];
 
 // 統計資料
-const totalMovies = taiwanMovieRankings.length;
-const activeCount = taiwanMovieRankings.filter((m) => m.isActive).length;
+const totalMovies = computed(() => {
+  const source = activeTab.value === "domestic" ? taiwanMovieRankings : overallMovieRankings;
+  return source.length;
+});
+const activeCount = computed(() => {
+  const source = activeTab.value === "domestic" ? taiwanMovieRankings : overallMovieRankings;
+  return source.filter((m) => m.isActive).length;
+});
+
+const headerTitle = computed(() =>
+  activeTab.value === "domestic" ? "台灣國片票房排行榜" : "台灣票房總排行榜",
+);
+const headerSubtitle = computed(() =>
+  activeTab.value === "domestic" ? "台灣本土電影歷史票房紀錄" : "台灣所有電影歷史票房紀錄（含外片）",
+);
 
 // 表格 meta 設定：動態 row class
 const tableMeta = {
   class: {
     tr: (row: Row<EnhancedMovieRanking>) => {
-      if (row.original.isActive) {
+      if (row.original.isSWC) {
         return "bg-amber-50/50 dark:bg-amber-900/10 border-l-2 border-l-amber-500";
       }
       // 斑馬紋效果
@@ -95,9 +135,9 @@ const tableMeta = {
           </div>
           <div>
             <h3 class="text-xl font-bold text-neutral-800 dark:text-neutral-200">
-              台灣電影票房排行榜
+              {{ headerTitle }}
             </h3>
-            <p class="text-xs text-neutral-500 dark:text-neutral-400">台灣本土電影歷史票房紀錄</p>
+            <p class="text-xs text-neutral-500 dark:text-neutral-400">{{ headerSubtitle }}</p>
           </div>
         </div>
         <div class="flex items-center gap-2">
@@ -106,6 +146,24 @@ const tableMeta = {
             {{ activeCount }} 部熱映中
           </UBadge>
         </div>
+      </div>
+
+      <!-- Tab 切換 -->
+      <div class="inline-flex rounded-lg bg-neutral-100 dark:bg-neutral-800 p-1 mt-4">
+        <button
+          v-for="tab in tabs"
+          :key="tab.value"
+          :class="[
+            'flex items-center gap-1.5 px-4 py-1.5 rounded-md text-sm font-medium transition-all',
+            activeTab === tab.value
+              ? 'bg-white dark:bg-neutral-700 text-amber-600 dark:text-amber-400 shadow-sm'
+              : 'text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300',
+          ]"
+          @click="activeTab = tab.value"
+        >
+          <UIcon :name="tab.icon" class="text-base" />
+          {{ tab.label }}
+        </button>
       </div>
     </template>
 
@@ -144,11 +202,11 @@ const tableMeta = {
 
       <template #title-cell="{ row }">
         <div class="flex items-center gap-2">
-          <span v-if="row.original.isActive" class="text-lg">☀️</span>
+          <span v-if="row.original.isSWC" class="text-lg">☀️</span>
           <span
             :class="[
               'font-medium',
-              row.original.isActive
+              row.original.isSWC
                 ? 'text-amber-600 dark:text-amber-400 font-bold text-lg'
                 : 'text-neutral-800 dark:text-neutral-200',
             ]"
@@ -162,7 +220,7 @@ const tableMeta = {
         <span
           :class="[
             'font-mono text-sm',
-            row.original.isActive
+            row.original.isSWC
               ? 'text-amber-600 dark:text-amber-400 font-semibold'
               : 'text-neutral-700 dark:text-neutral-300',
           ]"
@@ -172,7 +230,7 @@ const tableMeta = {
       </template>
 
       <template #gapFromSWC-cell="{ row }">
-        <span v-if="row.original.isActive" class="text-sm text-neutral-400 dark:text-neutral-500">
+        <span v-if="row.original.isSWC" class="text-sm text-neutral-400 dark:text-neutral-500">
           —
         </span>
         <span
@@ -189,7 +247,7 @@ const tableMeta = {
       </template>
 
       <template #percentOfSWC-cell="{ row }">
-        <div v-if="row.original.isActive" class="flex items-center gap-2">
+        <div v-if="row.original.isSWC" class="flex items-center gap-2">
           <UBadge color="amber" variant="soft" size="lg" class="text-base px-3 py-1">基準</UBadge>
         </div>
         <div v-else class="flex items-center gap-2">
@@ -227,5 +285,6 @@ const tableMeta = {
         <span v-else class="text-sm text-neutral-400 dark:text-neutral-500"> 已下檔 </span>
       </template>
     </UTable>
+
   </UCard>
 </template>

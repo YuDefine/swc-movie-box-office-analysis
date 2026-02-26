@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import {
-  targetRevenue,
-  getLatestCumulativeRevenue,
-} from "~/data/box-office";
+import { targetRevenue } from "~/data/box-office";
 
-const currentRevenue = getLatestCumulativeRevenue();
+const crownRevenue = 547_804_000;
 
 function formatCurrency(value: number): string {
   return new Intl.NumberFormat("zh-TW", {
@@ -27,13 +24,13 @@ function formatCurrency(value: number): string {
       <div class="flex-1">
         <div class="flex items-center gap-2 mb-2">
           <UIcon name="i-lucide-check-circle-2" class="text-lg text-amber-600 dark:text-amber-400" />
-          <p class="text-sm font-bold text-amber-700 dark:text-amber-300">票房已奪冠</p>
+          <p class="text-sm font-bold text-amber-700 dark:text-amber-300">票房已奪冠 · 2026/2/14 達成</p>
         </div>
         <div class="divide-y divide-amber-300/30 dark:divide-amber-600/30">
           <!-- 陽光女子合唱團 -->
           <div class="flex flex-wrap items-center gap-2 pb-2">
             <span class="text-lg font-bold text-amber-900 dark:text-amber-100">《陽光女子合唱團》</span>
-            <span class="font-bold text-amber-800 dark:text-amber-200">{{ formatCurrency(currentRevenue) }}</span>
+            <span class="font-bold text-amber-800 dark:text-amber-200">{{ formatCurrency(crownRevenue) }}</span>
             <span class="text-xs text-amber-700 dark:text-amber-300 hidden sm:inline">&middot;</span>
             <span class="text-xs text-amber-700 dark:text-amber-300">2025 年發行</span>
             <span class="px-1.5 py-0.5 rounded text-xs bg-amber-500/20 text-amber-800 dark:text-amber-200">輔12級</span>

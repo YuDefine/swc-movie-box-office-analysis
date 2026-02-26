@@ -32,6 +32,9 @@ export default defineNuxtConfig({
   css: ["~/assets/css/main.css"],
 
   fonts: {
+    providers: {
+      fontshare: false,
+    },
     families: [
       {
         name: "Huninn",

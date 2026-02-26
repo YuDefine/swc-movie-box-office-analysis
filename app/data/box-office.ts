@@ -132,9 +132,9 @@ export const movieInfo = {
   rating: "輔12級",
   runtime: "02:14:00",
   distributor: "壹壹喜喜電影股份有限公司",
-  lastUpdated: "2026-02-24 00:00:00",
+  lastUpdated: "2026-02-24 19:33:58",
   dataQuality: {
-    lastUpdated: "2026-02-24 00:00:00",
+    lastUpdated: "2026-02-24 19:33:58",
     dataSource: "國家影視聽中心票房資訊系統",
     totalWeeks: 12,
     missingData: [],
@@ -165,7 +165,7 @@ export const latestDaily: DailySnapshot | null = {
   dailyRevenue: 4_645_000,
   cumulativeRevenue: 655_111_000,
   cumulativeTickets: 2_379_219,
-  updatedAt: "2026-02-24 00:00:00",
+  updatedAt: "2026-02-24 19:33:58",
   isEstimate: true,
 };
 
@@ -316,6 +316,22 @@ export const taiwanMovieRankings: MovieRanking[] = [
   },
   { rank: 9, title: "KANO", revenue: 348_360_000, year: 2014, isActive: false },
   { rank: 10, title: "陣頭", revenue: 317_499_033, year: 2012, isActive: false },
+];
+
+// 台灣所有電影票房排行（含外片）
+export const overallMovieRankings: MovieRanking[] = [
+  { rank: 1, title: "阿凡達", revenue: 1_113_700_000, year: 2009, isActive: false, includesRerelease: true },
+  { rank: 2, title: "復仇者聯盟：終局之戰", revenue: 910_450_000, year: 2019, isActive: false },
+  { rank: 3, title: "鬼滅之刃劇場版 無限城篇 第一章 猗窩座再襲", revenue: 847_470_000, year: 2025, isActive: true },
+  { rank: 4, title: "侏羅紀世界", revenue: 827_000_000, year: 2015, isActive: false, includesRerelease: true },
+  { rank: 5, title: "玩命關頭7", revenue: 819_000_000, year: 2015, isActive: false, includesRerelease: true },
+  { rank: 6, title: "鐵達尼號", revenue: 798_580_000, year: 1997, isActive: false, includesRerelease: true },
+  { rank: 7, title: "變形金剛3", revenue: 762_000_000, year: 2011, isActive: false, includesRerelease: true },
+  { rank: 8, title: "阿凡達：水之道", revenue: 750_310_000, year: 2022, isActive: false },
+  { rank: 9, title: "動物方城市2", revenue: 737_520_000, year: 2025, isActive: true },
+  { rank: 10, title: "捍衛戰士：獨行俠", revenue: 736_590_000, year: 2022, isActive: false },
+  { rank: 11, title: "玩命關頭8", revenue: 650_830_000, year: 2017, isActive: false },
+  { rank: 12, title: "陽光女子合唱團", revenue: 650_308_567, tickets: 2_361_585, year: 2025, rating: "輔12級", isActive: true },
 ];
 
 // 目標數據（海角七號）
