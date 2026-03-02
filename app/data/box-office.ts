@@ -132,11 +132,11 @@ export const movieInfo = {
   rating: "輔12級",
   runtime: "02:14:00",
   distributor: "壹壹喜喜電影股份有限公司",
-  lastUpdated: "2026-02-25 12:00:00",
+  lastUpdated: "2026-03-02 12:00:00",
   dataQuality: {
-    lastUpdated: "2026-02-25 12:00:00",
+    lastUpdated: "2026-03-02 12:00:00",
     dataSource: "國家影視聽中心票房資訊系統",
-    totalWeeks: 12,
+    totalWeeks: 13,
     missingData: [],
     anomalies: [
       {
@@ -159,15 +159,7 @@ export const movieInfo = {
 };
 
 // 即時單日資訊（臨時追蹤用，會被完整週資料取代）
-export const latestDaily: DailySnapshot | null = {
-  date: "2026/02/24",
-  dayOfWeek: "二",
-  dailyRevenue: 4_064_000,
-  cumulativeRevenue: 659_175_000,
-  cumulativeTickets: 2_394_559,
-  updatedAt: "2026-02-25 12:00:00",
-  isEstimate: true,
-};
+export const latestDaily: DailySnapshot | null = null;
 
 // 完整週資料（確認後的正式資料）
 export const weeklyData: WeeklyBoxOffice[] = [
@@ -291,10 +283,20 @@ export const weeklyData: WeeklyBoxOffice[] = [
     changeRate: 26.97,
     theaters: 88,
   },
+  {
+    week: 13,
+    dateRange: "2026/02/23~2026/03/01",
+    revenue: 51_024_698,
+    tickets: 187_769,
+    cumulativeRevenue: 701_333_265,
+    cumulativeTickets: 2_549_354,
+    changeRate: -43.51,
+    theaters: 88,
+  },
 ];
 
 export const taiwanMovieRankings: MovieRanking[] = [
-  { rank: 1, title: "陽光女子合唱團", revenue: 650_308_567, tickets: 2_361_585, year: 2025, rating: "輔12級", isActive: true },
+  { rank: 1, title: "陽光女子合唱團", revenue: 701_333_265, tickets: 2_549_354, year: 2025, rating: "輔12級", isActive: true },
   { rank: 2, title: "海角七號", revenue: 534_351_817, tickets: 2_330_000, year: 2008, rating: "普遍級", isActive: false },
   {
     rank: 3,
@@ -330,8 +332,8 @@ export const overallMovieRankings: MovieRanking[] = [
   { rank: 8, title: "阿凡達：水之道", revenue: 750_310_000, year: 2022, isActive: false },
   { rank: 9, title: "動物方城市2", revenue: 737_520_000, year: 2025, isActive: true },
   { rank: 10, title: "捍衛戰士：獨行俠", revenue: 736_590_000, year: 2022, isActive: false },
-  { rank: 11, title: "玩命關頭8", revenue: 650_830_000, year: 2017, isActive: false },
-  { rank: 12, title: "陽光女子合唱團", revenue: 650_308_567, tickets: 2_361_585, year: 2025, rating: "輔12級", isActive: true },
+  { rank: 11, title: "陽光女子合唱團", revenue: 701_333_265, tickets: 2_549_354, year: 2025, rating: "輔12級", isActive: true },
+  { rank: 12, title: "玩命關頭8", revenue: 650_830_000, year: 2017, isActive: false },
 ];
 
 // 目標數據（海角七號）
@@ -399,7 +401,7 @@ export function calculateDerivedMetrics(data: WeeklyBoxOffice[]): DerivedMetrics
 }
 
 // 目標預測函數
-const FINAL_WEEK = 13; // 預測統計到第 13 週
+const FINAL_WEEK = 14; // 預測統計到第 14 週
 const OFFICIAL_RELEASE_WEEK = 5; // 第 5 週正式上映
 const THEATER_DROP_START_WEEK = 11; // 第 11 週開始場次驟減
 
