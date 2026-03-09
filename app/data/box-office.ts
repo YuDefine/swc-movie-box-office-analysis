@@ -132,11 +132,11 @@ export const movieInfo = {
   rating: "輔12級",
   runtime: "02:14:00",
   distributor: "壹壹喜喜電影股份有限公司",
-  lastUpdated: "2026-03-04 23:00:00",
+  lastUpdated: "2026-03-09 23:00:00",
   dataQuality: {
-    lastUpdated: "2026-03-04 23:00:00",
+    lastUpdated: "2026-03-09 23:00:00",
     dataSource: "國家影視聽中心票房資訊系統",
-    totalWeeks: 13,
+    totalWeeks: 14,
     missingData: [],
     anomalies: [
       {
@@ -159,14 +159,7 @@ export const movieInfo = {
 };
 
 // 即時單日資訊（臨時追蹤用，會被完整週資料取代）
-export const latestDaily: DailySnapshot | null = {
-  date: "2026/03/03",
-  dayOfWeek: "二",
-  dailyRevenue: 2_418_000,
-  cumulativeRevenue: 706_776_000,
-  updatedAt: "2026-03-04 23:00:00",
-  isEstimate: true,
-};
+export const latestDaily: DailySnapshot | null = null;
 
 // 完整週資料（確認後的正式資料）
 export const weeklyData: WeeklyBoxOffice[] = [
@@ -293,17 +286,27 @@ export const weeklyData: WeeklyBoxOffice[] = [
   {
     week: 13,
     dateRange: "2026/02/23~2026/03/01",
-    revenue: 51_024_698,
-    tickets: 187_769,
-    cumulativeRevenue: 701_333_265,
-    cumulativeTickets: 2_549_354,
+    revenue: 51_024_478,
+    tickets: 187_772,
+    cumulativeRevenue: 701_333_045,
+    cumulativeTickets: 2_549_357,
     changeRate: -43.51,
+    theaters: 88,
+  },
+  {
+    week: 14,
+    dateRange: "2026/03/02~2026/03/08",
+    revenue: 24_269_038,
+    tickets: 89_954,
+    cumulativeRevenue: 725_602_083,
+    cumulativeTickets: 2_639_311,
+    changeRate: -52.44,
     theaters: 88,
   },
 ];
 
 export const taiwanMovieRankings: MovieRanking[] = [
-  { rank: 1, title: "陽光女子合唱團", revenue: 701_333_265, tickets: 2_549_354, year: 2025, rating: "輔12級", isActive: true },
+  { rank: 1, title: "陽光女子合唱團", revenue: 725_602_083, tickets: 2_639_311, year: 2025, rating: "輔12級", isActive: true },
   { rank: 2, title: "海角七號", revenue: 534_351_817, tickets: 2_330_000, year: 2008, rating: "普遍級", isActive: false },
   {
     rank: 3,
@@ -339,7 +342,7 @@ export const overallMovieRankings: MovieRanking[] = [
   { rank: 8, title: "阿凡達：水之道", revenue: 750_310_000, year: 2022, isActive: false },
   { rank: 9, title: "動物方城市2", revenue: 737_520_000, year: 2025, isActive: true },
   { rank: 10, title: "捍衛戰士：獨行俠", revenue: 736_590_000, year: 2022, isActive: false },
-  { rank: 11, title: "陽光女子合唱團", revenue: 701_333_265, tickets: 2_549_354, year: 2025, rating: "輔12級", isActive: true },
+  { rank: 11, title: "陽光女子合唱團", revenue: 725_602_083, tickets: 2_639_311, year: 2025, rating: "輔12級", isActive: true },
   { rank: 12, title: "玩命關頭8", revenue: 650_830_000, year: 2017, isActive: false },
 ];
 
