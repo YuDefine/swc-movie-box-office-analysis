@@ -1,9 +1,5 @@
 <script setup lang="ts">
-import {
-  movieInfo,
-  getLatestCumulativeRevenue,
-  getCurrentRanking,
-} from "~/data/box-office";
+const { movieInfo, weeklyData, latestDaily, taiwanMovieRankings } = useBoxOfficeData();
 
 const colorMode = useColorMode();
 
@@ -11,8 +7,12 @@ function toggleColorMode() {
   colorMode.preference = colorMode.value === "dark" ? "light" : "dark";
 }
 
-const pageTitle = `${movieInfo.title} - 台灣票房分析`;
-const pageDescription = `追蹤《${movieInfo.title}》票房表現，目前累計票房 ${(getLatestCumulativeRevenue() / 100_000_000).toFixed(2)} 億，台灣國產電影排行第 ${getCurrentRanking()} 名。每週更新票房趨勢、戲院數據等分析資訊。`;
+const pageTitle = computed(() => `${movieInfo.value.title} - 台灣票房分析`);
+const pageDescription = computed(() => {
+  const revenue = getLatestCumulativeRevenue(weeklyData.value, latestDaily.value);
+  const ranking = getCurrentRanking(weeklyData.value, latestDaily.value, taiwanMovieRankings.value);
+  return `追蹤《${movieInfo.value.title}》票房表現，目前累計票房 ${(revenue / 100_000_000).toFixed(2)} 億，台灣國產電影排行第 ${ranking} 名。每週更新票房趨勢、戲院數據等分析資訊。`;
+});
 
 useSeoMeta({
   title: pageTitle,
@@ -27,8 +27,8 @@ useSeoMeta({
 
 useSchemaOrg([
   defineWebPage({
-    name: pageTitle,
-    description: pageDescription,
+    name: "陽光女子合唱團 - 台灣票房分析",
+    description: "追蹤台灣電影《陽光女子合唱團》票房數據即時分析",
   }),
   defineWebSite({
     name: "陽光女子合唱團票房分析",

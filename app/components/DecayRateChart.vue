@@ -1,54 +1,58 @@
 <script setup lang="ts">
-import { weeklyData, calculateDerivedMetrics, formatDateRangeShort } from "~/data/box-office";
+const { weeklyData } = useBoxOfficeData();
 
 const OFFICIAL_RELEASE_WEEK = 5;
 
-const metrics = calculateDerivedMetrics(weeklyData);
+const metrics = computed(() => calculateDerivedMetrics(weeklyData.value));
 
-// 只顯示正式上映後的數據（第 5 週起），排除試映期異常數據
-const chartData = metrics
-  .filter((m) => m.week >= OFFICIAL_RELEASE_WEEK)
-  .map((m) => {
-    const weekData = weeklyData.find((w) => w.week === m.week);
-    return {
-      week: m.week,
-      dateRange: weekData?.dateRange ?? "",
-      decayRate: m.decayRate !== null ? Number(m.decayRate.toFixed(2)) : 0,
-      baseline: 1, // 基準線 = 1（持平）
-    };
-  });
+const chartData = computed(() =>
+  metrics.value
+    .filter((m) => m.week >= OFFICIAL_RELEASE_WEEK)
+    .map((m) => {
+      const weekData = weeklyData.value.find((w) => w.week === m.week);
+      return {
+        week: m.week,
+        dateRange: weekData?.dateRange ?? "",
+        decayRate: m.decayRate !== null ? Number(m.decayRate.toFixed(2)) : 0,
+        baseline: 1,
+      };
+    }),
+);
 
 const categories = {
   decayRate: {
     name: "週變動係數",
-    color: "#8b5cf6", // violet-500
+    color: "#8b5cf6",
   },
   baseline: {
     name: "基準線（持平）",
-    color: "#6b7280", // gray-500
+    color: "#6b7280",
   },
 };
 
 const xFormatter = (i: number) => {
-  const d = chartData[i];
+  const d = chartData.value[i];
   return d ? formatDateRangeShort(d.dateRange) : "";
 };
 
-// 響應式 x 軸刻度
-const { xExplicitTicks } = useChartTicks(chartData.length);
+const { xExplicitTicks } = useChartTicks(computed(() => chartData.value.length));
 
-// 計算統計
-const growthWeeks = chartData.filter((d) => d.decayRate > 1).length;
-const decayWeeks = chartData.filter((d) => d.decayRate < 1 && d.decayRate > 0).length;
-const avgDecayRate =
-  chartData.length > 0 ? chartData.reduce((sum, d) => sum + d.decayRate, 0) / chartData.length : 0;
+const growthWeeks = computed(() => chartData.value.filter((d) => d.decayRate > 1).length);
+const decayWeeks = computed(() => chartData.value.filter((d) => d.decayRate < 1 && d.decayRate > 0).length);
+const avgDecayRate = computed(() =>
+  chartData.value.length > 0
+    ? chartData.value.reduce((sum, d) => sum + d.decayRate, 0) / chartData.value.length
+    : 0,
+);
 
-// 近 3 週趨勢
-const recent3 = chartData.slice(-3);
-const recentAvg =
-  recent3.length > 0 ? recent3.reduce((sum, d) => sum + d.decayRate, 0) / recent3.length : 0;
-const trend = recentAvg >= 1 ? "成長" : "衰退";
-const trendColor = recentAvg >= 1 ? "success" : "warning";
+const recent3 = computed(() => chartData.value.slice(-3));
+const recentAvg = computed(() =>
+  recent3.value.length > 0
+    ? recent3.value.reduce((sum, d) => sum + d.decayRate, 0) / recent3.value.length
+    : 0,
+);
+const trend = computed(() => (recentAvg.value >= 1 ? "成長" : "衰退"));
+const trendColor = computed(() => (recentAvg.value >= 1 ? "success" : "warning"));
 </script>
 
 <template>

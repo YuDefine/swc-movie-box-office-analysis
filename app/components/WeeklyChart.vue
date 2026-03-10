@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { weeklyData, formatDateRangeShort } from "~/data/box-office";
+const { weeklyData } = useBoxOfficeData();
 
-const chartData = weeklyData.map((d) => ({
-  week: d.week,
-  dateRange: d.dateRange,
-  revenue: d.revenue / 100_000_000,
-}));
+const chartData = computed(() =>
+  weeklyData.value.map((d) => ({
+    week: d.week,
+    dateRange: d.dateRange,
+    revenue: d.revenue / 100_000_000,
+  })),
+);
 
 const categories = {
   revenue: {
@@ -15,21 +17,22 @@ const categories = {
 };
 
 const xFormatter = (i: number) => {
-  const d = chartData[i];
+  const d = chartData.value[i];
   return d ? formatDateRangeShort(d.dateRange) : "";
 };
 
 const yFormatter = (tick: number) => (tick === 0 ? "0" : `${tick.toFixed(1)} 億`);
 
-// 限制 Y 軸最多顯示 6 個刻度
 const yNumTicks = 6;
 
-// 響應式 x 軸刻度
-const { xExplicitTicks } = useChartTicks(chartData.length);
+const { xExplicitTicks } = useChartTicks(computed(() => chartData.value.length));
 
-// 計算最高週票房
-const maxWeek = chartData.reduce((max, curr) => (curr.revenue > max.revenue ? curr : max));
-const maxWeekDateRange = weeklyData.find((d) => d.week === maxWeek.week)?.dateRange ?? "";
+const maxWeek = computed(() =>
+  chartData.value.reduce((max, curr) => (curr.revenue > max.revenue ? curr : max), chartData.value[0] ?? { week: 0, dateRange: "", revenue: 0 }),
+);
+const maxWeekDateRange = computed(() =>
+  weeklyData.value.find((d) => d.week === maxWeek.value.week)?.dateRange ?? "",
+);
 </script>
 
 <template>

@@ -13,15 +13,21 @@
     "format": "oxfmt ."
   },
   "dependencies": {
+    "@nuxt/content": "^3.12.0",
     "@nuxt/ui": "^4.4.0",
     "@nuxtjs/seo": "^3.4.0",
     "nuxt": "^4.3.0",
     "nuxt-charts": "^2.1.1",
+    "nuxt-studio": "^1.4.0",
     "vue": "^3.5.27",
     "vue-router": "^4.6.4"
   },
+  "pnpm": {
+    "onlyBuiltDependencies": ["better-sqlite3"]
+  },
   "devDependencies": {
     "@iconify-json/simple-icons": "^1.2.73",
+    "better-sqlite3": "^12.6.2",
     "nuxt-charts-cli": "^1.0.1",
     "oxfmt": "^0.28.0",
     "oxlint": "^1.43.0",

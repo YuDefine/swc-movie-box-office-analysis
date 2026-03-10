@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import {
-  getTicketsGapToFirst,
-  getTicketsProgressPercentage,
-  targetTickets,
-  getLatestCumulativeTickets,
-} from "~/data/box-office";
+const { weeklyData, latestDaily, targetTickets } = useBoxOfficeData();
 
-const ticketsGap = getTicketsGapToFirst();
-const ticketsProgress = getTicketsProgressPercentage();
-const currentTickets = getLatestCumulativeTickets();
-const isAchieved = ticketsGap <= 0;
+const ticketsGap = computed(() =>
+  getTicketsGapToFirst(weeklyData.value, latestDaily.value, targetTickets.value),
+);
+const ticketsProgress = computed(() =>
+  getTicketsProgressPercentage(weeklyData.value, latestDaily.value, targetTickets.value),
+);
+const currentTickets = computed(() =>
+  getLatestCumulativeTickets(weeklyData.value, latestDaily.value),
+);
+const isAchieved = computed(() => ticketsGap.value <= 0);
 
 function formatNumber(value: number): string {
   return new Intl.NumberFormat("zh-TW").format(value);

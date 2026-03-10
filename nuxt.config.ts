@@ -7,7 +7,7 @@ export default defineNuxtConfig({
     compatibilityVersion: 4,
   },
 
-  modules: ["@nuxtjs/seo", "@nuxt/ui", "nuxt-charts"],
+  modules: ["@nuxtjs/seo", "@nuxt/ui", "nuxt-charts", "@nuxt/content", "nuxt-studio"],
 
   site: {
     url: "https://swc.yudefine.com.tw",
@@ -41,6 +41,16 @@ export default defineNuxtConfig({
         provider: "google",
       },
     ],
+  },
+
+  studio: {
+    enabled: true,
+    repository: {
+      provider: "github",
+      owner: "YuDefine",
+      repo: "swc-movie-box-office-analysis",
+      branch: "main",
+    },
   },
 
   nitro: {

@@ -1,13 +1,10 @@
 <script setup lang="ts">
 import type { Row } from "@tanstack/vue-table";
-import {
-  taiwanMovieRankings,
-  overallMovieRankings,
-  getLatestCumulativeRevenue,
-  movieInfo,
-} from "~/data/box-office";
 import type { TableColumn } from "@nuxt/ui";
 import type { MovieRanking } from "~/types";
+
+const { taiwanMovieRankings, overallMovieRankings, weeklyData, latestDaily, movieInfo } =
+  useBoxOfficeData();
 
 // 擴充型別：加入差距與差異百分比
 interface EnhancedMovieRanking extends MovieRanking {
@@ -54,23 +51,25 @@ function formatPercent(value: number): string {
   return `${sign}${normalized.toFixed(1)}%`;
 }
 
-// 取得陽光女子合唱團的最新票房（使用即時資料）
-const swcRevenue = getLatestCumulativeRevenue();
+const swcRevenue = computed(() =>
+  getLatestCumulativeRevenue(weeklyData.value, latestDaily.value),
+);
 
-// 計算擴充資料（根據 tab 切換數據來源，動態排序）
 const enhancedRankings = computed<EnhancedMovieRanking[]>(() => {
-  const source = activeTab.value === "domestic" ? taiwanMovieRankings : overallMovieRankings;
+  const source =
+    activeTab.value === "domestic" ? taiwanMovieRankings.value : overallMovieRankings.value;
+  const revenue = swcRevenue.value;
 
   const enhanced = source.map((movie) => {
-    const isSWC = movie.title === movieInfo.title;
-    const movieRevenue = isSWC ? swcRevenue : movie.revenue;
-    const rawPercentDiff = swcRevenue > 0 ? ((movieRevenue - swcRevenue) / swcRevenue) * 100 : 0;
+    const isSWC = movie.title === movieInfo.value.title;
+    const movieRevenue = isSWC ? revenue : movie.revenue;
+    const rawPercentDiff = revenue > 0 ? ((movieRevenue - revenue) / revenue) * 100 : 0;
     const clampedPercentDiff = Math.max(rawPercentDiff, -100);
     return {
       ...movie,
       isSWC,
       revenue: movieRevenue,
-      gapFromSWC: movieRevenue - swcRevenue,
+      gapFromSWC: movieRevenue - revenue,
       percentOfSWC: clampedPercentDiff,
     };
   });
@@ -96,11 +95,13 @@ const columns: TableColumn<EnhancedMovieRanking>[] = [
 
 // 統計資料
 const totalMovies = computed(() => {
-  const source = activeTab.value === "domestic" ? taiwanMovieRankings : overallMovieRankings;
+  const source =
+    activeTab.value === "domestic" ? taiwanMovieRankings.value : overallMovieRankings.value;
   return source.length;
 });
 const activeCount = computed(() => {
-  const source = activeTab.value === "domestic" ? taiwanMovieRankings : overallMovieRankings;
+  const source =
+    activeTab.value === "domestic" ? taiwanMovieRankings.value : overallMovieRankings.value;
   return source.filter((m) => m.isActive).length;
 });
 

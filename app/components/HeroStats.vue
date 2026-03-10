@@ -1,9 +1,5 @@
 <script setup lang="ts">
-import { weeklyData, movieInfo, getCurrentRanking, getLatestCumulativeRevenue, getLatestCumulativeTickets } from "~/data/box-office";
-
-const latestCumulativeRevenue = getLatestCumulativeRevenue();
-const latestCumulativeTickets = getLatestCumulativeTickets();
-const currentRanking = getCurrentRanking();
+const { weeklyData, movieInfo, latestDaily, taiwanMovieRankings } = useBoxOfficeData();
 
 function formatCurrency(value: number): string {
   return new Intl.NumberFormat("zh-TW", {
@@ -18,37 +14,43 @@ function formatNumber(value: number): string {
   return new Intl.NumberFormat("zh-TW").format(value);
 }
 
-const stats = [
-  {
-    label: "累計票房",
-    value: formatCurrency(latestCumulativeRevenue),
-    icon: "i-lucide-banknote",
-    color: "text-amber-500",
-    bgColor: "bg-amber-500/10",
-    highlight: true,
-  },
-  {
-    label: "累計觀影人次",
-    value: `${formatNumber(latestCumulativeTickets)} 人`,
-    icon: "i-lucide-users",
-    color: "text-blue-500",
-    bgColor: "bg-blue-500/10",
-  },
-  {
-    label: "票房排名",
-    value: `第 ${currentRanking} 名`,
-    icon: "i-lucide-trophy",
-    color: "text-emerald-500",
-    bgColor: "bg-emerald-500/10",
-  },
-  {
-    label: "上映日期",
-    value: movieInfo.releaseDate.replace(/-/g, "/"),
-    icon: "i-lucide-calendar",
-    color: "text-violet-500",
-    bgColor: "bg-violet-500/10",
-  },
-];
+const stats = computed(() => {
+  const revenue = getLatestCumulativeRevenue(weeklyData.value, latestDaily.value);
+  const tickets = getLatestCumulativeTickets(weeklyData.value, latestDaily.value);
+  const ranking = getCurrentRanking(weeklyData.value, latestDaily.value, taiwanMovieRankings.value);
+
+  return [
+    {
+      label: "累計票房",
+      value: formatCurrency(revenue),
+      icon: "i-lucide-banknote",
+      color: "text-amber-500",
+      bgColor: "bg-amber-500/10",
+      highlight: true,
+    },
+    {
+      label: "累計觀影人次",
+      value: `${formatNumber(tickets)} 人`,
+      icon: "i-lucide-users",
+      color: "text-blue-500",
+      bgColor: "bg-blue-500/10",
+    },
+    {
+      label: "票房排名",
+      value: `第 ${ranking} 名`,
+      icon: "i-lucide-trophy",
+      color: "text-emerald-500",
+      bgColor: "bg-emerald-500/10",
+    },
+    {
+      label: "上映日期",
+      value: movieInfo.value.releaseDate.replace(/-/g, "/"),
+      icon: "i-lucide-calendar",
+      color: "text-violet-500",
+      bgColor: "bg-violet-500/10",
+    },
+  ];
+});
 </script>
 
 <template>

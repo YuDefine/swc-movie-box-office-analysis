@@ -1,43 +1,41 @@
 <script setup lang="ts">
-import { weeklyData, formatDateRangeShort } from "~/data/box-office";
+const { weeklyData } = useBoxOfficeData();
 
-// 準備圖表資料：累計人次（萬）
-const chartData = weeklyData.map((d) => ({
-  week: d.week,
-  dateRange: d.dateRange,
-  cumulativeTickets: d.cumulativeTickets / 10_000,
-}));
+const chartData = computed(() =>
+  weeklyData.value.map((d) => ({
+    week: d.week,
+    dateRange: d.dateRange,
+    cumulativeTickets: d.cumulativeTickets / 10_000,
+  })),
+);
 
 const categories = {
   cumulativeTickets: {
     name: "累計人次（萬）",
-    color: "#10b981", // emerald-500
+    color: "#10b981",
   },
 };
 
 const xFormatter = (i: number) => {
-  const d = chartData[i];
+  const d = chartData.value[i];
   return d ? formatDateRangeShort(d.dateRange) : "";
 };
 
 const yFormatter = (tick: number) => (tick === 0 ? "0" : `${tick.toFixed(0)}`);
 
-// 限制 Y 軸最多顯示 6 個刻度
 const yNumTicks = 6;
 
-// 響應式 x 軸刻度
-const { xExplicitTicks } = useChartTicks(chartData.length);
+const { xExplicitTicks } = useChartTicks(computed(() => chartData.value.length));
 
-// 累計票房輔助資訊
-const latestWeek = weeklyData[weeklyData.length - 1];
-const latestRevenue = latestWeek?.cumulativeRevenue ?? 0;
-const formatRevenue = (latestRevenue / 100_000_000).toFixed(2);
+const latestWeek = computed(() => weeklyData.value[weeklyData.value.length - 1]);
+const latestRevenue = computed(() => latestWeek.value?.cumulativeRevenue ?? 0);
+const formatRevenue = computed(() => (latestRevenue.value / 100_000_000).toFixed(2));
 
-// 累計人次
-const latestTickets = latestWeek?.cumulativeTickets ?? 0;
-const formatTickets = new Intl.NumberFormat("zh-TW").format(Math.round(latestTickets));
+const latestTickets = computed(() => latestWeek.value?.cumulativeTickets ?? 0);
+const formatTickets = computed(() =>
+  new Intl.NumberFormat("zh-TW").format(Math.round(latestTickets.value)),
+);
 
-// 里程碑資料
 const milestones = [
   { tickets: 10, label: "10萬人" },
   { tickets: 50, label: "50萬人" },

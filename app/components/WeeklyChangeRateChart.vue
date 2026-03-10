@@ -1,34 +1,33 @@
 <script setup lang="ts">
-import { weeklyData, formatDateRangeShort } from "~/data/box-office";
+const { weeklyData } = useBoxOfficeData();
 
-// 準備圖表資料，顯示增長率變化
-const chartData = weeklyData.slice(1).map((d) => ({
-  week: d.week,
-  dateRange: d.dateRange,
-  changeRate: d.changeRate ?? 0,
-}));
+const chartData = computed(() =>
+  weeklyData.value.slice(1).map((d) => ({
+    week: d.week,
+    dateRange: d.dateRange,
+    changeRate: d.changeRate ?? 0,
+  })),
+);
 
 const categories = {
   changeRate: {
     name: "週變動率（%）",
-    color: "#10b981", // emerald-500
+    color: "#10b981",
   },
 };
 
 const xFormatter = (i: number) => {
-  const d = chartData[i];
+  const d = chartData.value[i];
   return d ? formatDateRangeShort(d.dateRange) : "";
 };
 
-// 響應式 x 軸刻度
-const { xExplicitTicks } = useChartTicks(chartData.length);
+const { xExplicitTicks } = useChartTicks(computed(() => chartData.value.length));
 
-// 計算統計數據
-const positiveWeeks = chartData.filter((d) => d.changeRate > 0).length;
-const negativeWeeks = chartData.filter((d) => d.changeRate < 0).length;
-const maxGrowth = Math.max(...chartData.map((d) => d.changeRate));
-const maxGrowthWeek = chartData.find((d) => d.changeRate === maxGrowth);
-const maxGrowthDateRange = maxGrowthWeek?.dateRange ?? "";
+const positiveWeeks = computed(() => chartData.value.filter((d) => d.changeRate > 0).length);
+const negativeWeeks = computed(() => chartData.value.filter((d) => d.changeRate < 0).length);
+const maxGrowth = computed(() => Math.max(...chartData.value.map((d) => d.changeRate)));
+const maxGrowthWeek = computed(() => chartData.value.find((d) => d.changeRate === maxGrowth.value));
+const maxGrowthDateRange = computed(() => maxGrowthWeek.value?.dateRange ?? "");
 </script>
 
 <template>

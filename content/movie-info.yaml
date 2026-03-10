@@ -1,0 +1,22 @@
+title: 陽光女子合唱團
+englishTitle: "Sunshine Women's Choir"
+releaseDate: "2025-12-31"
+rating: 輔12級
+runtime: "02:14:00"
+distributor: 壹壹喜喜電影股份有限公司
+lastUpdated: "2026-03-09 23:00:00"
+dataQuality:
+  lastUpdated: "2026-03-09 23:00:00"
+  dataSource: 國家影視聽中心票房資訊系統
+  totalWeeks: 14
+  missingData: []
+  anomalies:
+    - week: 2
+      field: changeRate
+      note: 第 2 週增幅 878.33% 為試映期擴大戲院數
+    - week: 4
+      field: changeRate
+      note: 第 4 週增幅 1473.26% 為試映期轉正式上映前擴大
+    - week: 5
+      field: theaters
+      note: 第 5 週為正式上映，91 間戲院

@@ -1,36 +1,38 @@
 <script setup lang="ts">
-import { weeklyData, formatDateRangeShort } from "~/data/box-office";
+const { weeklyData } = useBoxOfficeData();
 
-// 準備圖表資料，排除第一週（無增長率）
-const chartData = weeklyData.slice(1).map((d) => ({
-  week: d.week,
-  dateRange: d.dateRange,
-  changeRate: d.changeRate ?? 0,
-  theaters: d.theaters,
-}));
+const chartData = computed(() =>
+  weeklyData.value.slice(1).map((d) => ({
+    week: d.week,
+    dateRange: d.dateRange,
+    changeRate: d.changeRate ?? 0,
+    theaters: d.theaters,
+  })),
+);
 
 const categories = {
   changeRate: {
     name: "週增長率（%）",
-    color: "#10b981", // emerald-500 - 成長指標
+    color: "#10b981",
   },
   theaters: {
     name: "上映院數",
-    color: "#8b5cf6", // violet-500 - 次要資訊
+    color: "#8b5cf6",
   },
 };
 
 const xFormatter = (i: number) => {
-  const d = chartData[i];
+  const d = chartData.value[i];
   return d ? formatDateRangeShort(d.dateRange) : "";
 };
 
-// 響應式 x 軸刻度
-const { xExplicitTicks } = useChartTicks(chartData.length);
+const { xExplicitTicks } = useChartTicks(computed(() => chartData.value.length));
 
-// 找出最大增長週
-const maxGrowthWeek = chartData.reduce((max, curr) =>
-  curr.changeRate > max.changeRate ? curr : max,
+const maxGrowthWeek = computed(() =>
+  chartData.value.reduce(
+    (max, curr) => (curr.changeRate > max.changeRate ? curr : max),
+    chartData.value[0] ?? { week: 0, dateRange: "", changeRate: 0, theaters: 0 },
+  ),
 );
 </script>
 

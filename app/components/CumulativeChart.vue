@@ -1,37 +1,31 @@
 <script setup lang="ts">
-import {
-  weeklyData,
-  latestDaily,
-  targetRevenue,
-  getProgressPercentage,
-  formatDateRangeShort,
-  formatDailyDateShort,
-  hasNewerDailyData,
-} from "~/data/box-office";
+const { weeklyData, latestDaily, targetRevenue } = useBoxOfficeData();
 
-// 週報資料
-const weeklyChartData = weeklyData.map((d) => ({
-  week: d.week,
-  dateRange: d.dateRange,
-  label: formatDateRangeShort(d.dateRange),
-  cumulative: d.cumulativeRevenue / 100_000_000,
-  target: targetRevenue / 100_000_000,
-}));
+const chartData = computed(() => {
+  const target = targetRevenue.value;
+  const weeklyChartData = weeklyData.value.map((d) => ({
+    week: d.week,
+    dateRange: d.dateRange,
+    label: formatDateRangeShort(d.dateRange),
+    cumulative: d.cumulativeRevenue / 100_000_000,
+    target: target / 100_000_000,
+  }));
 
-// 加入即時數據點（如果有更新的數據）
-const hasDaily = hasNewerDailyData();
-const chartData = hasDaily
-  ? [
+  const hasDaily = hasNewerDailyData(weeklyData.value, latestDaily.value);
+  if (hasDaily && latestDaily.value) {
+    return [
       ...weeklyChartData,
       {
-        week: weeklyData.length + 0.5,
-        dateRange: latestDaily.date,
-        label: `${formatDailyDateShort(latestDaily.date)}*`,
-        cumulative: latestDaily.cumulativeRevenue / 100_000_000,
-        target: targetRevenue / 100_000_000,
+        week: weeklyData.value.length + 0.5,
+        dateRange: latestDaily.value.date,
+        label: `${formatDailyDateShort(latestDaily.value.date)}*`,
+        cumulative: latestDaily.value.cumulativeRevenue / 100_000_000,
+        target: target / 100_000_000,
       },
-    ]
-  : weeklyChartData;
+    ];
+  }
+  return weeklyChartData;
+});
 
 const categories = {
   cumulative: {
@@ -45,19 +39,19 @@ const categories = {
 };
 
 const xFormatter = (i: number) => {
-  const d = chartData[i];
+  const d = chartData.value[i];
   return d ? d.label : "";
 };
 
 const yFormatter = (tick: number) => (tick === 0 ? "0" : `${tick.toFixed(1)} 億`);
 
-// 限制 Y 軸最多顯示 6 個刻度
 const yNumTicks = 6;
 
-// 響應式 x 軸刻度
-const { xExplicitTicks } = useChartTicks(chartData.length);
+const { xExplicitTicks } = useChartTicks(computed(() => chartData.value.length));
 
-const progress = Math.round(getProgressPercentage());
+const progress = computed(() =>
+  Math.round(getProgressPercentage(weeklyData.value, latestDaily.value, targetRevenue.value)),
+);
 </script>
 
 <template>

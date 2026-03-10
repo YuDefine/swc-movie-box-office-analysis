@@ -1,0 +1,55 @@
+rankings:
+  - rank: 1
+    title: 陽光女子合唱團
+    revenue: 725602083
+    tickets: 2639311
+    year: 2025
+    rating: 輔12級
+    isActive: true
+  - rank: 2
+    title: 海角七號
+    revenue: 534351817
+    tickets: 2330000
+    year: 2008
+    rating: 普遍級
+    isActive: false
+  - rank: 3
+    title: 賽德克·巴萊（上）：太陽旗
+    revenue: 472650000
+    year: 2011
+    isActive: false
+  - rank: 4
+    title: 那些年，我們一起追的女孩
+    revenue: 429054382
+    year: 2011
+    isActive: false
+  - rank: 5
+    title: 大尾鱸鰻
+    revenue: 428027419
+    year: 2013
+    isActive: false
+  - rank: 6
+    title: 我的少女時代
+    revenue: 410000000
+    year: 2015
+    isActive: false
+  - rank: 7
+    title: 當男人戀愛時
+    revenue: 405402260
+    year: 2021
+    isActive: false
+  - rank: 8
+    title: 關於我和鬼變成家人的那件事
+    revenue: 363806015
+    year: 2023
+    isActive: false
+  - rank: 9
+    title: KANO
+    revenue: 348360000
+    year: 2014
+    isActive: false
+  - rank: 10
+    title: 陣頭
+    revenue: 317499033
+    year: 2012
+    isActive: false

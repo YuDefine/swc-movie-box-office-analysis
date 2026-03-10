@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { targetRevenue } from "~/data/box-office";
+const { targetRevenue } = useBoxOfficeData();
 
 const crownRevenue = 547_804_000;
 

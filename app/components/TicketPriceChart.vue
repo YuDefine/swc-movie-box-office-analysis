@@ -1,41 +1,43 @@
 <script setup lang="ts">
-import { weeklyData, calculateDerivedMetrics, formatDateRangeShort } from "~/data/box-office";
+const { weeklyData } = useBoxOfficeData();
 
-const metrics = calculateDerivedMetrics(weeklyData);
+const metrics = computed(() => calculateDerivedMetrics(weeklyData.value));
 
-// 計算整體平均票價
-const totalRevenue = weeklyData.reduce((sum, w) => sum + w.revenue, 0);
-const totalTickets = weeklyData.reduce((sum, w) => sum + w.tickets, 0);
-const overallAveragePrice = totalTickets > 0 ? totalRevenue / totalTickets : 0;
+const totalRevenue = computed(() => weeklyData.value.reduce((sum, w) => sum + w.revenue, 0));
+const totalTickets = computed(() => weeklyData.value.reduce((sum, w) => sum + w.tickets, 0));
+const overallAveragePrice = computed(() =>
+  totalTickets.value > 0 ? totalRevenue.value / totalTickets.value : 0,
+);
 
-const chartData = metrics.map((m, i) => ({
-  week: m.week,
-  dateRange: weeklyData[i]?.dateRange ?? "",
-  price: Math.round(m.averageTicketPrice),
-  average: Math.round(overallAveragePrice),
-}));
+const chartData = computed(() =>
+  metrics.value.map((m, i) => ({
+    week: m.week,
+    dateRange: weeklyData.value[i]?.dateRange ?? "",
+    price: Math.round(m.averageTicketPrice),
+    average: Math.round(overallAveragePrice.value),
+  })),
+);
 
 const categories = {
   price: {
     name: "週平均票價（元）",
-    color: "#f59e0b", // amber-500 - 主要數據
+    color: "#f59e0b",
   },
   average: {
     name: "整體平均票價",
-    color: "#6b7280", // neutral - 基準線
+    color: "#6b7280",
   },
 };
 
 const xFormatter = (i: number) => {
-  const d = chartData[i];
+  const d = chartData.value[i];
   return d ? formatDateRangeShort(d.dateRange) : "";
 };
 
-// 響應式 x 軸刻度
-const { xExplicitTicks } = useChartTicks(chartData.length);
+const { xExplicitTicks } = useChartTicks(computed(() => chartData.value.length));
 
-const minPrice = Math.min(...chartData.map((d) => d.price));
-const maxPrice = Math.max(...chartData.map((d) => d.price));
+const minPrice = computed(() => Math.min(...chartData.value.map((d) => d.price)));
+const maxPrice = computed(() => Math.max(...chartData.value.map((d) => d.price)));
 </script>
 
 <template>

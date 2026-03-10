@@ -1,0 +1,68 @@
+rankings:
+  - rank: 1
+    title: 阿凡達
+    revenue: 1113700000
+    year: 2009
+    isActive: false
+    includesRerelease: true
+  - rank: 2
+    title: 復仇者聯盟：終局之戰
+    revenue: 910450000
+    year: 2019
+    isActive: false
+  - rank: 3
+    title: 鬼滅之刃劇場版 無限城篇 第一章 猗窩座再襲
+    revenue: 847470000
+    year: 2025
+    isActive: true
+  - rank: 4
+    title: 侏羅紀世界
+    revenue: 827000000
+    year: 2015
+    isActive: false
+    includesRerelease: true
+  - rank: 5
+    title: 玩命關頭7
+    revenue: 819000000
+    year: 2015
+    isActive: false
+    includesRerelease: true
+  - rank: 6
+    title: 鐵達尼號
+    revenue: 798580000
+    year: 1997
+    isActive: false
+    includesRerelease: true
+  - rank: 7
+    title: 變形金剛3
+    revenue: 762000000
+    year: 2011
+    isActive: false
+    includesRerelease: true
+  - rank: 8
+    title: 阿凡達：水之道
+    revenue: 750310000
+    year: 2022
+    isActive: false
+  - rank: 9
+    title: 動物方城市2
+    revenue: 737520000
+    year: 2025
+    isActive: true
+  - rank: 10
+    title: 捍衛戰士：獨行俠
+    revenue: 736590000
+    year: 2022
+    isActive: false
+  - rank: 11
+    title: 陽光女子合唱團
+    revenue: 725602083
+    tickets: 2639311
+    year: 2025
+    rating: 輔12級
+    isActive: true
+  - rank: 12
+    title: 玩命關頭8
+    revenue: 650830000
+    year: 2017
+    isActive: false
