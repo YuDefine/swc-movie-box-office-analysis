@@ -22,10 +22,23 @@ const actualSize = computed(() => props.size);
 const actualStrokeWidth = computed(() => props.strokeWidth);
 const radius = computed(() => actualSize.value / 2 - actualStrokeWidth.value);
 const circumference = computed(() => 2 * Math.PI * radius.value);
+
+const animatedValue = ref(0);
+
 const strokeDasharray = computed(
-  () => `${(props.value / 100) * circumference.value} ${circumference.value}`,
+  () => `${(animatedValue.value / 100) * circumference.value} ${circumference.value}`,
 );
 const center = computed(() => actualSize.value / 2);
+
+onMounted(() => {
+  requestAnimationFrame(() => {
+    animatedValue.value = props.value;
+  });
+});
+
+watch(() => props.value, (val) => {
+  animatedValue.value = val;
+});
 </script>
 
 <template>
@@ -40,7 +53,6 @@ const center = computed(() => actualSize.value / 2);
         :stroke-width="actualStrokeWidth"
         class="text-(--ui-bg-accented)"
       />
-
       <circle
         :cx="center"
         :cy="center"
@@ -52,7 +64,7 @@ const center = computed(() => actualSize.value / 2);
         stroke-linecap="round"
         :stroke-dasharray="strokeDasharray"
         :transform="`rotate(-90 ${center} ${center})`"
-        class="transition-all duration-500 ease-out"
+        class="transition-all duration-700 ease-out"
       />
       <text
         :x="center"

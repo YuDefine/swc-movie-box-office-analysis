@@ -28,25 +28,12 @@ const chartData = computed(() => {
 });
 
 const categories = {
-  cumulative: {
-    name: "累計票房（億元）",
-    color: "#f59e0b",
-  },
-  target: {
-    name: "目標（海角七號）",
-    color: "#ef4444",
-  },
+  cumulative: { name: "累計票房（億元）", color: "#f59e0b" },
+  target: { name: "目標（海角七號）", color: "#ef4444" },
 };
 
-const xFormatter = (i: number) => {
-  const d = chartData.value[i];
-  return d ? d.label : "";
-};
-
+const xFormatter = (i: number) => chartData.value[i]?.label ?? "";
 const yFormatter = (tick: number) => (tick === 0 ? "0" : `${tick.toFixed(1)} 億`);
-
-const yNumTicks = 6;
-
 const { xExplicitTicks } = useChartTicks(computed(() => chartData.value.length));
 
 const progress = computed(() =>
@@ -55,20 +42,15 @@ const progress = computed(() =>
 </script>
 
 <template>
-  <UCard class="transition-shadow duration-200 hover:shadow-lg">
+  <UCard class="chart-card">
     <template #header>
       <div class="flex items-center justify-between">
-        <div class="flex items-center gap-3">
-          <div class="p-2 rounded-lg bg-amber-500/10">
-            <UIcon name="i-lucide-chart-line" class="text-xl text-amber-500" />
-          </div>
-          <div>
-            <h3 class="font-semibold text-neutral-800 dark:text-neutral-200">累計票房</h3>
-            <p class="text-xs text-neutral-500 dark:text-neutral-400">票房累積成長曲線</p>
-          </div>
+        <div>
+          <h3 class="font-semibold text-neutral-800 dark:text-neutral-200">累計票房成長曲線</h3>
+          <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">對比海角七號 5.34 億目標線</p>
         </div>
         <UBadge :color="progress >= 100 ? 'success' : 'warning'" variant="soft" size="sm">
-          達成率：{{ progress }}%
+          {{ progress }}%
         </UBadge>
       </div>
     </template>
@@ -76,11 +58,11 @@ const progress = computed(() =>
     <LineChart
       :data="chartData"
       :categories="categories"
-      :height="256"
+      :height="280"
       :x-formatter="xFormatter"
       :x-explicit-ticks="xExplicitTicks"
       :y-formatter="yFormatter"
-      :y-num-ticks="yNumTicks"
+      :y-num-ticks="6"
       x-label="日期"
     />
   </UCard>

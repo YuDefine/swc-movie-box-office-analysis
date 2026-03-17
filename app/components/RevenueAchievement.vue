@@ -3,47 +3,36 @@ const { targetRevenue } = useBoxOfficeData();
 
 const crownRevenue = 547_804_000;
 
-function formatCurrency(value: number): string {
-  return new Intl.NumberFormat("zh-TW", {
-    style: "currency",
-    currency: "TWD",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(value);
+function formatYi(value: number): string {
+  return (value / 100_000_000).toFixed(2);
 }
 </script>
 
 <template>
-  <UCard class="overflow-hidden">
-    <div
-      class="flex items-center gap-4 p-6 rounded-xl bg-gradient-to-r from-amber-50 to-yellow-50 dark:from-amber-900/20 dark:to-yellow-900/20 border-2 border-amber-300/50 dark:border-amber-600/50"
-    >
-      <div class="flex-shrink-0 p-4 rounded-xl bg-amber-500/20">
-        <UIcon name="i-lucide-trophy" class="text-4xl text-amber-600 dark:text-amber-400" />
+  <UCard class="chart-card overflow-hidden">
+    <div class="flex items-start gap-4">
+      <div class="flex-shrink-0 p-3 rounded-xl bg-gradient-to-br from-amber-100 to-yellow-50 dark:from-amber-900/30 dark:to-yellow-900/20">
+        <UIcon name="i-lucide-trophy" class="text-2xl text-amber-600 dark:text-amber-400" />
       </div>
-      <div class="flex-1">
-        <div class="flex items-center gap-2 mb-2">
-          <UIcon name="i-lucide-check-circle-2" class="text-lg text-amber-600 dark:text-amber-400" />
-          <p class="text-sm font-bold text-amber-700 dark:text-amber-300">票房已奪冠 · 2026/2/14 達成</p>
+      <div class="flex-1 min-w-0">
+        <div class="flex items-center gap-2 mb-3">
+          <h3 class="font-bold text-neutral-800 dark:text-neutral-200">票房奪冠</h3>
+          <UBadge color="success" variant="soft" size="sm">已達成</UBadge>
         </div>
-        <div class="divide-y divide-amber-300/30 dark:divide-amber-600/30">
-          <!-- 陽光女子合唱團 -->
-          <div class="flex flex-wrap items-center gap-2 pb-2">
-            <span class="text-lg font-bold text-amber-900 dark:text-amber-100">《陽光女子合唱團》</span>
-            <span class="font-bold text-amber-800 dark:text-amber-200">{{ formatCurrency(crownRevenue) }}</span>
-            <span class="text-xs text-amber-700 dark:text-amber-300 hidden sm:inline">&middot;</span>
-            <span class="text-xs text-amber-700 dark:text-amber-300">2025 年發行</span>
-            <span class="px-1.5 py-0.5 rounded text-xs bg-amber-500/20 text-amber-800 dark:text-amber-200">輔12級</span>
+        <div class="space-y-2">
+          <div class="flex items-baseline gap-2 flex-wrap">
+            <span class="text-lg font-bold text-amber-600 dark:text-amber-400">{{ formatYi(crownRevenue) }} 億</span>
+            <span class="text-xs text-neutral-500 dark:text-neutral-400">陽光女子合唱團</span>
           </div>
-          <!-- 海角七號 -->
-          <div class="flex flex-wrap items-center gap-2 pt-2">
-            <span class="text-base text-amber-800 dark:text-amber-200">《海角七號》</span>
-            <span class="text-sm text-amber-700 dark:text-amber-300">{{ formatCurrency(targetRevenue) }}</span>
-            <span class="text-xs text-amber-700/70 dark:text-amber-300/70 hidden sm:inline">&middot;</span>
-            <span class="text-xs text-amber-700/70 dark:text-amber-300/70">2008 年發行</span>
-            <span class="px-1.5 py-0.5 rounded text-xs bg-amber-400/15 text-amber-700 dark:text-amber-300">普遍級</span>
+          <div class="flex items-baseline gap-2 flex-wrap">
+            <span class="text-base text-neutral-600 dark:text-neutral-300">{{ formatYi(targetRevenue) }} 億</span>
+            <span class="text-xs text-neutral-500 dark:text-neutral-400">海角七號</span>
           </div>
         </div>
+        <p class="mt-3 text-xs text-emerald-600 dark:text-emerald-400 font-medium">
+          <UIcon name="i-lucide-check-circle-2" class="inline-block mr-1 align-text-bottom" />
+          2026/2/14 達成 · 超越 {{ formatYi(crownRevenue - targetRevenue) }} 億
+        </p>
       </div>
     </div>
   </UCard>

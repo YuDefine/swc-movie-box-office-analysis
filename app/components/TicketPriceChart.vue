@@ -19,21 +19,14 @@ const chartData = computed(() =>
 );
 
 const categories = {
-  price: {
-    name: "週平均票價（元）",
-    color: "#f59e0b",
-  },
-  average: {
-    name: "整體平均票價",
-    color: "#6b7280",
-  },
+  price: { name: "週平均票價（元）", color: "#f59e0b" },
+  average: { name: "整體平均票價", color: "#6b7280" },
 };
 
 const xFormatter = (i: number) => {
   const d = chartData.value[i];
   return d ? formatDateRangeShort(d.dateRange) : "";
 };
-
 const { xExplicitTicks } = useChartTicks(computed(() => chartData.value.length));
 
 const minPrice = computed(() => Math.min(...chartData.value.map((d) => d.price)));
@@ -41,20 +34,15 @@ const maxPrice = computed(() => Math.max(...chartData.value.map((d) => d.price))
 </script>
 
 <template>
-  <UCard class="transition-shadow duration-200 hover:shadow-lg">
+  <UCard class="chart-card">
     <template #header>
       <div class="flex items-center justify-between">
-        <div class="flex items-center gap-3">
-          <div class="p-2 rounded-lg bg-amber-500/10">
-            <UIcon name="i-lucide-ticket" class="text-xl text-amber-500" />
-          </div>
-          <div>
-            <h3 class="font-semibold text-neutral-800 dark:text-neutral-200">平均票價趨勢</h3>
-            <p class="text-xs text-neutral-500 dark:text-neutral-400">每週平均票價變化</p>
-          </div>
+        <div>
+          <h3 class="font-semibold text-neutral-800 dark:text-neutral-200">平均票價趨勢</h3>
+          <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">每週平均票價變化</p>
         </div>
         <UBadge color="neutral" variant="soft" size="sm">
-          平均 {{ Math.round(overallAveragePrice) }} 元
+          均價 {{ Math.round(overallAveragePrice) }} 元
         </UBadge>
       </div>
     </template>
@@ -70,20 +58,18 @@ const maxPrice = computed(() => Math.max(...chartData.value.map((d) => d.price))
     />
 
     <template #footer>
-      <div class="grid grid-cols-3 gap-4 text-sm">
+      <div class="grid grid-cols-3 gap-3 text-sm">
         <div>
-          <span class="text-neutral-500 dark:text-neutral-400">最低票價</span>
+          <span class="text-neutral-500 dark:text-neutral-400 text-xs">最低</span>
           <p class="font-semibold text-neutral-800 dark:text-neutral-200">{{ minPrice }} 元</p>
         </div>
         <div>
-          <span class="text-neutral-500 dark:text-neutral-400">最高票價</span>
+          <span class="text-neutral-500 dark:text-neutral-400 text-xs">最高</span>
           <p class="font-semibold text-neutral-800 dark:text-neutral-200">{{ maxPrice }} 元</p>
         </div>
         <div>
-          <span class="text-neutral-500 dark:text-neutral-400">價差</span>
-          <p class="font-semibold text-neutral-800 dark:text-neutral-200">
-            {{ maxPrice - minPrice }} 元
-          </p>
+          <span class="text-neutral-500 dark:text-neutral-400 text-xs">價差</span>
+          <p class="font-semibold text-neutral-800 dark:text-neutral-200">{{ maxPrice - minPrice }} 元</p>
         </div>
       </div>
     </template>
