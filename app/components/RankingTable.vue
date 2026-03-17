@@ -43,8 +43,8 @@ function formatGap(value: number): string {
 }
 
 function formatPercent(value: number): string {
-  const rounded = Number(value.toFixed(1));
-  const normalized = Object.is(rounded, -0) ? 0 : rounded;
+  const truncated = Math.trunc(value * 10) / 10;
+  const normalized = Object.is(truncated, -0) ? 0 : truncated;
   const sign = normalized > 0 ? "+" : "";
   return `${sign}${normalized.toFixed(1)}%`;
 }

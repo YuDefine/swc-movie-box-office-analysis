@@ -12,7 +12,7 @@ const chartData = computed(() =>
       return {
         week: m.week,
         dateRange: weekData?.dateRange ?? "",
-        decayRate: m.decayRate !== null ? Number(m.decayRate.toFixed(2)) : 0,
+        decayRate: m.decayRate !== null ? Math.trunc(m.decayRate * 100) / 100 : 0,
         baseline: 1,
       };
     }),
@@ -79,11 +79,11 @@ const trendColor = computed(() => (recentAvg.value >= 1 ? "success" : "warning")
         </div>
         <div class="p-2 rounded-lg bg-violet-50 dark:bg-violet-900/20 text-center">
           <p class="text-[11px] text-violet-600 dark:text-violet-400">平均</p>
-          <p class="font-bold text-sm text-violet-700 dark:text-violet-300">{{ avgDecayRate.toFixed(2) }}</p>
+          <p class="font-bold text-sm text-violet-700 dark:text-violet-300">{{ (Math.trunc(avgDecayRate * 100) / 100).toFixed(2) }}</p>
         </div>
         <div class="p-2 rounded-lg bg-amber-50 dark:bg-amber-900/20 text-center">
           <p class="text-[11px] text-amber-600 dark:text-amber-400">近 3 週</p>
-          <p class="font-bold text-sm text-amber-700 dark:text-amber-300">{{ recentAvg.toFixed(2) }}</p>
+          <p class="font-bold text-sm text-amber-700 dark:text-amber-300">{{ (Math.trunc(recentAvg * 100) / 100).toFixed(2) }}</p>
         </div>
       </div>
     </template>

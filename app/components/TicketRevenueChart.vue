@@ -17,7 +17,7 @@ const xFormatter = (i: number) => {
   const d = chartData.value[i];
   return d ? formatDateRangeShort(d.dateRange) : "";
 };
-const yFormatter = (tick: number) => (tick === 0 ? "0" : `${tick.toFixed(1)}`);
+const yFormatter = (tick: number) => (tick === 0 ? "0" : `${(Math.trunc(tick * 10) / 10).toFixed(1)}`);
 const { xExplicitTicks } = useChartTicks(computed(() => chartData.value.length));
 
 const totalRevenue = computed(() => weeklyData.value.reduce((sum, d) => sum + d.revenue, 0));

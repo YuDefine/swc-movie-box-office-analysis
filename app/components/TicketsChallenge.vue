@@ -13,7 +13,7 @@ const currentTickets = computed(() =>
 const isAchieved = computed(() => ticketsGap.value <= 0);
 
 function formatWan(value: number): string {
-  return (value / 10_000).toFixed(1);
+  return (Math.floor(value / 1_000) / 10).toFixed(1);
 }
 </script>
 

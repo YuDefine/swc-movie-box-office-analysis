@@ -17,7 +17,7 @@ const xFormatter = (i: number) => {
   const d = chartData.value[i];
   return d ? formatDateRangeShort(d.dateRange) : "";
 };
-const yFormatter = (tick: number) => (tick === 0 ? "0" : `${tick.toFixed(0)}`);
+const yFormatter = (tick: number) => (tick === 0 ? "0" : `${Math.trunc(tick)}`);
 const { xExplicitTicks } = useChartTicks(computed(() => chartData.value.length));
 
 const latestTickets = computed(() => weeklyData.value[weeklyData.value.length - 1]?.cumulativeTickets ?? 0);

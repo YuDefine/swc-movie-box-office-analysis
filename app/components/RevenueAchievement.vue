@@ -4,7 +4,7 @@ const { targetRevenue } = useBoxOfficeData();
 const crownRevenue = 547_804_000;
 
 function formatYi(value: number): string {
-  return (value / 100_000_000).toFixed(2);
+  return (Math.floor(value / 1_000_000) / 100).toFixed(2);
 }
 </script>
 

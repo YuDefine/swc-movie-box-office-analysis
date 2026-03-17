@@ -11,7 +11,7 @@ const pageTitle = computed(() => `${movieInfo.value.title} - 台灣票房分析`
 const pageDescription = computed(() => {
   const revenue = getLatestCumulativeRevenue(weeklyData.value, latestDaily.value);
   const ranking = getCurrentRanking(weeklyData.value, latestDaily.value, taiwanMovieRankings.value);
-  return `追蹤《${movieInfo.value.title}》票房表現，目前累計票房 ${(revenue / 100_000_000).toFixed(2)} 億，台灣國產電影排行第 ${ranking} 名。每週更新票房趨勢、戲院數據等分析資訊。`;
+  return `追蹤《${movieInfo.value.title}》票房表現，目前累計票房 ${(Math.floor(revenue / 1_000_000) / 100).toFixed(2)} 億，台灣國產電影排行第 ${ranking} 名。每週更新票房趨勢、戲院數據等分析資訊。`;
 });
 
 useSeoMeta({

@@ -45,22 +45,22 @@ rankings:
     year: 2022
     isActive: false
   - rank: 9
+    title: 陽光女子合唱團
+    revenue: 743536000
+    tickets: 2705285
+    year: 2025
+    rating: 輔12級
+    isActive: true
+  - rank: 10
     title: 動物方城市2
     revenue: 737520000
     year: 2025
     isActive: true
-  - rank: 10
+  - rank: 11
     title: 捍衛戰士：獨行俠
     revenue: 736590000
     year: 2022
     isActive: false
-  - rank: 11
-    title: 陽光女子合唱團
-    revenue: 725602083
-    tickets: 2639311
-    year: 2025
-    rating: 輔12級
-    isActive: true
   - rank: 12
     title: 玩命關頭8
     revenue: 650830000

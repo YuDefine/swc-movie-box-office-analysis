@@ -50,7 +50,7 @@ watch(rawTickets, (v) => { if (hasAnimated.value) animTickets.value = v; });
 
 const displayRevenue = computed(() => {
   const v = hasAnimated.value ? animRevenue.value : rawRevenue.value;
-  return (v / 100_000_000).toFixed(2);
+  return (Math.floor(v / 1_000_000) / 100).toFixed(2);
 });
 
 const displayTickets = computed(() => {

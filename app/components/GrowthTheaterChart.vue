@@ -38,7 +38,7 @@ const maxGrowthWeek = computed(() =>
           <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">戲院數與票房增長關聯</p>
         </div>
         <UBadge color="emerald" variant="soft" size="sm">
-          最高 +{{ maxGrowthWeek.changeRate.toFixed(0) }}%
+          最高 +{{ Math.trunc(maxGrowthWeek.changeRate) }}%
         </UBadge>
       </div>
     </template>

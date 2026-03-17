@@ -17,7 +17,7 @@ const xFormatter = (i: number) => {
   const d = chartData.value[i];
   return d ? formatDateRangeShort(d.dateRange) : "";
 };
-const yFormatter = (tick: number) => (tick === 0 ? "0" : `${tick.toFixed(1)} 億`);
+const yFormatter = (tick: number) => (tick === 0 ? "0" : `${(Math.trunc(tick * 10) / 10).toFixed(1)} 億`);
 const { xExplicitTicks } = useChartTicks(computed(() => chartData.value.length));
 
 const maxWeek = computed(() =>
