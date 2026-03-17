@@ -80,7 +80,7 @@ onMounted(() => {
     <div class="relative overflow-hidden">
       <!-- Ambient glow -->
       <div
-        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] rounded-full blur-[120px] bg-amber-400/[0.12] dark:bg-amber-500/[0.06]"
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] rounded-full blur-[120px] bg-amber-400/[0.12] dark:bg-amber-500/[0.06] hero-glow-parallax"
       />
       <div
         class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-400/30 to-transparent"
@@ -135,7 +135,7 @@ onMounted(() => {
       <!-- ─── 奪冠里程碑 ─── -->
       <section
         ref="achieveRef"
-        class="py-12 lg:py-16"
+        class="py-12 lg:py-16 scroll-reveal"
         :class="[
           achieveHydrated && !achieveRevealed ? 'reveal-hidden' : '',
           achieveHydrated && achieveRevealed ? 'reveal-visible' : '',
@@ -146,8 +146,8 @@ onMounted(() => {
           <h2 class="text-xl font-bold text-neutral-800 dark:text-neutral-200">奪冠里程碑</h2>
         </div>
         <div class="grid gap-5 lg:grid-cols-2">
-          <RevenueAchievement />
-          <TicketsChallenge />
+          <RevenueAchievement class="scroll-slide-left" />
+          <TicketsChallenge class="scroll-slide-right" />
         </div>
       </section>
 
@@ -157,7 +157,7 @@ onMounted(() => {
       <!-- ─── 票房趨勢 ─── -->
       <section
         ref="trendRef"
-        class="py-12 lg:py-16"
+        class="py-12 lg:py-16 scroll-reveal"
         :class="[
           trendHydrated && !trendRevealed ? 'reveal-hidden' : '',
           trendHydrated && trendRevealed ? 'reveal-visible' : '',
@@ -170,8 +170,8 @@ onMounted(() => {
         <!-- Featured chart: full width -->
         <CumulativeChart class="mb-5" />
         <div class="grid gap-5 lg:grid-cols-2">
-          <WeeklyChart />
-          <CumulativeTicketsChart />
+          <WeeklyChart class="scroll-slide-left" />
+          <CumulativeTicketsChart class="scroll-slide-right" />
         </div>
       </section>
 
@@ -180,7 +180,7 @@ onMounted(() => {
       <!-- ─── 票房排行 ─── -->
       <section
         ref="rankRef"
-        class="py-12 lg:py-16"
+        class="py-12 lg:py-16 scroll-reveal"
         :class="[
           rankHydrated && !rankRevealed ? 'reveal-hidden' : '',
           rankHydrated && rankRevealed ? 'reveal-visible' : '',
@@ -198,7 +198,7 @@ onMounted(() => {
       <!-- ─── 進階分析 ─── -->
       <section
         ref="analysisRef"
-        class="py-12 lg:py-16"
+        class="py-12 lg:py-16 scroll-reveal"
         :class="[
           analysisHydrated && !analysisRevealed ? 'reveal-hidden' : '',
           analysisHydrated && analysisRevealed ? 'reveal-visible' : '',
@@ -209,11 +209,11 @@ onMounted(() => {
           <h2 class="text-xl font-bold text-neutral-800 dark:text-neutral-200">進階分析</h2>
         </div>
         <div class="grid gap-5 lg:grid-cols-2">
-          <TicketRevenueChart />
-          <WeeklyChangeRateChart />
-          <GrowthTheaterChart />
-          <DecayRateChart />
-          <TicketPriceChart />
+          <TicketRevenueChart class="scroll-slide-left" />
+          <WeeklyChangeRateChart class="scroll-slide-right" />
+          <GrowthTheaterChart class="scroll-slide-left" />
+          <DecayRateChart class="scroll-slide-right" />
+          <TicketPriceChart class="scroll-slide-left" />
         </div>
       </section>
     </UContainer>

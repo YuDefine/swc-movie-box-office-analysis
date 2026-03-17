@@ -11,50 +11,28 @@ const weeksSinceRelease = computed(() => {
   return Math.floor(diffMs / (7 * 24 * 60 * 60 * 1000));
 });
 
-// Animated counters
-const animRevenue = ref(0);
-const animTickets = ref(0);
-const hasAnimated = ref(false);
-
-function easeOutCubic(t: number): number {
-  return 1 - (1 - t) ** 3;
-}
-
-function animateValue(from: number, to: number, duration: number, cb: (v: number) => void) {
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    cb(to);
-    return;
-  }
-  const start = performance.now();
-  function tick(now: number) {
-    const t = Math.min((now - start) / duration, 1);
-    cb(Math.round(from + (to - from) * easeOutCubic(t)));
-    if (t < 1) requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
-}
+// Spring-animated counters
+const revenueSpring = useSpring(0, { stiffness: 120, damping: 18 });
+const ticketsSpring = useSpring(0, { stiffness: 120, damping: 18 });
 
 const isHydrated = ref(false);
 
 onMounted(() => {
   isHydrated.value = true;
-  if (!hasAnimated.value) {
-    hasAnimated.value = true;
-    animateValue(0, rawRevenue.value, 800, (v) => { animRevenue.value = v; });
-    animateValue(0, rawTickets.value, 800, (v) => { animTickets.value = v; });
-  }
+  revenueSpring.target.value = rawRevenue.value;
+  ticketsSpring.target.value = rawTickets.value;
 });
 
-watch(rawRevenue, (v) => { if (hasAnimated.value) animRevenue.value = v; });
-watch(rawTickets, (v) => { if (hasAnimated.value) animTickets.value = v; });
+watch(rawRevenue, (v) => { revenueSpring.target.value = v; });
+watch(rawTickets, (v) => { ticketsSpring.target.value = v; });
 
 const displayRevenue = computed(() => {
-  const v = hasAnimated.value ? animRevenue.value : rawRevenue.value;
+  const v = isHydrated.value ? revenueSpring.value.value : rawRevenue.value;
   return (Math.floor(v / 1_000_000) / 100).toFixed(2);
 });
 
 const displayTickets = computed(() => {
-  const v = hasAnimated.value ? animTickets.value : rawTickets.value;
+  const v = isHydrated.value ? ticketsSpring.value.value : rawTickets.value;
   return Math.floor(v / 10_000);
 });
 
