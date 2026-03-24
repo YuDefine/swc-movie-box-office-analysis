@@ -81,41 +81,49 @@ weeks:
     theaters: 88
   - week: 11
     dateRange: "2026/02/09~2026/02/15"
-    revenue: 71142478
+    revenue: 71123718
     tickets: 258888
-    cumulativeRevenue: 559978986
+    cumulativeRevenue: 559960226
     cumulativeTickets: 2032843
-    changeRate: -25.22
+    changeRate: -25.24
     theaters: 88
   - week: 12
     dateRange: "2026/02/16~2026/02/22"
-    revenue: 90329581
+    revenue: 90206421
     tickets: 328742
-    cumulativeRevenue: 650308567
+    cumulativeRevenue: 650166647
     cumulativeTickets: 2361585
-    changeRate: 26.97
+    changeRate: 26.83
     theaters: 88
   - week: 13
     dateRange: "2026/02/23~2026/03/01"
-    revenue: 51024478
+    revenue: 50985378
     tickets: 187772
-    cumulativeRevenue: 701333045
+    cumulativeRevenue: 701152025
     cumulativeTickets: 2549357
-    changeRate: -43.51
+    changeRate: -43.48
     theaters: 88
   - week: 14
     dateRange: "2026/03/02~2026/03/08"
-    revenue: 24269038
+    revenue: 24255723
     tickets: 89954
-    cumulativeRevenue: 725602083
+    cumulativeRevenue: 725407748
     cumulativeTickets: 2639311
-    changeRate: -52.44
+    changeRate: -52.43
     theaters: 88
   - week: 15
     dateRange: "2026/03/09~2026/03/15"
-    revenue: 16280168
+    revenue: 16272058
     tickets: 60619
-    cumulativeRevenue: 741882251
+    cumulativeRevenue: 741679806
     cumulativeTickets: 2699930
-    changeRate: -32.92
+    changeRate: -32.91
     theaters: 88
+  - week: 16
+    dateRange: "2026/03/16~2026/03/22"
+    revenue: 10649566
+    tickets: 39888
+    cumulativeRevenue: 752329372
+    cumulativeTickets: 2739818
+    changeRate: -34.55
+    theaters: 87

@@ -40,17 +40,17 @@ rankings:
     isActive: false
     includesRerelease: true
   - rank: 8
+    title: 陽光女子合唱團
+    revenue: 753449000
+    tickets: 2743157
+    year: 2025
+    rating: 輔12級
+    isActive: true
+  - rank: 9
     title: 阿凡達：水之道
     revenue: 750310000
     year: 2022
     isActive: false
-  - rank: 9
-    title: 陽光女子合唱團
-    revenue: 743536000
-    tickets: 2705285
-    year: 2025
-    rating: 輔12級
-    isActive: true
   - rank: 10
     title: 動物方城市2
     revenue: 737520000
